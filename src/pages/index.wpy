@@ -1,0 +1,41 @@
+<style lang="less">
+
+</style>
+
+<template>
+  <view class="container">
+    <button @tap="toast">第三方组件</button>
+    <toast />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Toast from '@/components/toast'
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+    components = {
+      toast: Toast
+    }
+    data = {}
+    computed = {}
+    methods = {
+      toast() {
+        let promise = this.$invoke('toast', 'show', {
+          title: '自定义标题',
+          img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
+        })
+        promise.then((d) => {
+          console.log('toast done')
+        })
+      }
+    }
+    events = {}
+    onLoad() {}
+    onPullDownRefresh() {
+      console.log('test')
+    }
+  }
+</script>
