@@ -1,14 +1,8 @@
 <style lang="less">
   page {
+    width: 100%;
     height: 100%;
-  }
-  .container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
+    position: relative;
     background-color: #F6F3E2;
   }
 </style>
@@ -19,15 +13,39 @@
   export default class extends wepy.app {
     config = {
       pages: [
-        'pages/index'
+        'pages/store',
+        'pages/ownBook',
+        'pages/mine'
       ],
       window: {
         backgroundTextStyle: 'light',
         navigationBarBackgroundColor: '#F6F3E2',
         backgroundColor: '#F6F3E2',
-        navigationBarTitleText: 'WeChat',
-        navigationBarTextStyle: 'black',
-        enablePullDownRefresh: true
+        navigationBarTitleText: '点读精灵',
+        navigationBarTextStyle: 'black'
+      },
+      tabBar: {
+        color: '#C85715',
+        selectedColor: '#C85715',
+        backgroundColor: '#C7D69B',
+        borderStyle: '#C7D69B',
+        list: [{
+          pagePath: 'pages/store',
+          iconPath: 'image/icon_API.png',
+          selectedIconPath: 'image/icon_API_HL.png',
+          text: '书城'
+        }, {
+          pagePath: 'pages/ownBook',
+          iconPath: 'image/icon_API.png',
+          selectedIconPath: 'image/icon_API_HL.png',
+          text: '我的书架'
+        }, {
+          pagePath: 'pages/mine',
+          iconPath: 'image/icon_API.png',
+          selectedIconPath: 'image/icon_API_HL.png',
+          text: '个人中心'
+        }],
+        position: 'bottom'
       }
     }
     globalData = {

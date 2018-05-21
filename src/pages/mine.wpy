@@ -1,0 +1,34 @@
+<style lang="less">
+
+</style>
+
+<template>
+  <view>
+    Mine
+    <view class="countup">{{ c1 }}</view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import CountUp from '../components/countup/index.js' // countup组件
+  export default class Mine extends wepy.page {
+    config = {}
+    components = {}
+    data = {}
+    computed = {}
+    methods = {}
+    events = {}
+    onLoad() {
+      this.c1 = new CountUp(1, 1024, 0, 2, {
+        printValue(value) {
+          this.setData({
+            c1: value
+          })
+        }
+      })
+      this.c1.start()
+    }
+    onPullDownRefresh() {}
+  }
+</script>
