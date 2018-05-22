@@ -1,28 +1,31 @@
 <style lang="less">
   @import '../styles/refresher.less';
   @import '../styles/book.less';
-  
 </style>
 
 <template>
-  <view class="container" style="position: absolute; width: 100%; height: 100%; {{ $wux.refresher.style }}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend">
-    <view class="wux-refresher {{ $wux.refresher.className || 'hidden' }}">
-      <view class="wux-refresher__content {{ $wux.refresher.pullingText || $wux.refresher.refreshingText ? 'wux-refresher__content--text' : '' }}">
-        <view class="wux-refresher__icon-pulling {{ $wux.refresher.disablePullingRotation ? 'wux-refresher__icon-pulling--disabled' : '' }}">
-          <text class="{{ $wux.refresher.pullingIcon || 'wux-refresher__icon--arrow-down' }}"></text>
+  <view class="container">
+    <view class="refresher-view" style="position: absolute; width: 100%; height: 100%; {{ $wux.refresher.style }}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend">
+      <view class="wux-refresher {{ $wux.refresher.className || 'hidden' }}">
+        <view class="wux-refresher__content {{ $wux.refresher.pullingText || $wux.refresher.refreshingText ? 'wux-refresher__content--text' : '' }}">
+          <view class="wux-refresher__icon-pulling {{ $wux.refresher.disablePullingRotation ? 'wux-refresher__icon-pulling--disabled' : '' }}">
+            <text class="{{ $wux.refresher.pullingIcon || 'wux-refresher__icon--arrow-down' }}"></text>
+          </view>
+          <view class="wux-refresher__text-pulling">{{ $wux.refresher.pullingText }}</view>
+          <view class="wux-refresher__icon-refreshing">
+            <text class="{{ $wux.refresher.refreshingIcon || 'wux-refresher__icon--refresher' }}"></text>
+          </view>
+          <view class="wux-refresher__text-refreshing">{{ $wux.refresher.refreshingText }}</view>
         </view>
-        <view class="wux-refresher__text-pulling">{{ $wux.refresher.pullingText }}</view>
-        <view class="wux-refresher__icon-refreshing">
-          <text class="{{ $wux.refresher.refreshingIcon || 'wux-refresher__icon--refresher' }}"></text>
-        </view>
-        <view class="wux-refresher__text-refreshing">{{ $wux.refresher.refreshingText }}</view>
       </view>
-    </view>
-    <view class="bookShelf">
-      <view class="bookShelf-item"></view>
-      <view class="bookShelf-item"></view>
-      <view class="bookShelf-item"></view>
-      <view class="bookShelf-item"></view>
+      <view class="bookShelf">
+        <view class="bookShelf-item" wx:for="{{[1,2,3,4]}}">
+          <navigator url="/pages/bookPage" class="book-cover">
+            <image src="https://speechx-common.oss-cn-shenzhen.aliyuncs.com/books/cover/101/lonelybeach.png" />
+          </navigator>
+          <view class="book-title">test</view>
+        </view>
+      </view>
     </view>
   </view>
 </template>
@@ -33,18 +36,7 @@
   export default class Store extends wepy.page {
     config = {}
     components = {}
-    data = {
-      items: [
-        {
-          title: new Date(),
-          content: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。'
-        },
-        {
-          title: new Date(),
-          content: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。'
-        }
-      ]
-    }
+    data = {}
     computed = {}
     methods = {}
     events = {}
@@ -55,17 +47,6 @@
         },
         onRefresh() {
           console.log('onRefresh')
-          setTimeout(() => {
-            const items = this.scope.data.items
-            items.unshift({
-              title: new Date(),
-              content: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。'
-            })
-            this.scope.setData({
-              items: items
-            })
-            this.events.emit(`scroll.refreshComplete`)
-          }, 2000)
         }
       })
       console.log(this.refresher)
@@ -78,6 +59,13 @@
     }
     touchend(e) {
       this.refresher.touchend(e)
+    }
+    onReachBottom() {
+      console.log('onReachBottom')
+    }
+    previewBook(e) {
+      const dataset = e.currentTarget.dataset
+      console.log(dataset)
     }
   }
 </script>

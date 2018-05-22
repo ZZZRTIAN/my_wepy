@@ -15,7 +15,8 @@
       pages: [
         'pages/store',
         'pages/ownBook',
-        'pages/mine'
+        'pages/mine',
+        'pages/bookPage'
       ],
       window: {
         backgroundTextStyle: 'light',
@@ -28,21 +29,21 @@
         color: '#C85715',
         selectedColor: '#C85715',
         backgroundColor: '#C7D69B',
-        borderStyle: '#C7D69B',
+        borderStyle: 'white',
         list: [{
           pagePath: 'pages/store',
-          iconPath: 'image/icon_API.png',
-          selectedIconPath: 'image/icon_API_HL.png',
+          iconPath: 'image/mall_unclick.png',
+          selectedIconPath: 'image/mall_click.png',
           text: '书城'
         }, {
           pagePath: 'pages/ownBook',
-          iconPath: 'image/icon_API.png',
-          selectedIconPath: 'image/icon_API_HL.png',
+          iconPath: 'image/resource_unclick.png',
+          selectedIconPath: 'image/resource_click.png',
           text: '我的书架'
         }, {
           pagePath: 'pages/mine',
-          iconPath: 'image/icon_API.png',
-          selectedIconPath: 'image/icon_API_HL.png',
+          iconPath: 'image/mine_unclicked.png',
+          selectedIconPath: 'image/mine_clicked.png',
           text: '个人中心'
         }],
         position: 'bottom'
