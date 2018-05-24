@@ -1,6 +1,6 @@
 <style lang="less">
-  @import '../styles/refresher.less';
-  @import '../styles/book.less';
+  @import '../../styles/refresher.less';
+  @import '../../styles/book.less';
 </style>
 
 <template>
@@ -20,10 +20,15 @@
       </view>
       <view class="bookShelf">
         <view class="bookShelf-item" wx:for="{{[1,2,3,4]}}">
-          <navigator url="/pages/bookPage" class="book-cover">
+          <navigator url="/pages/book/index" class="book-cover">
             <image src="https://speechx-common.oss-cn-shenzhen.aliyuncs.com/books/cover/101/lonelybeach.png" />
           </navigator>
           <view class="book-title">test</view>
+        </view>
+        <view class="bookShelf-item">
+          <button @tap="tapGoStore" class="book-cover book-add-more">
+            <image src="../../image/plus.png" mode="widthFix" />
+          </button>
         </view>
       </view>
     </view>
@@ -32,13 +37,19 @@
 
 <script>
   import wepy from 'wepy'
-  import $wuxRefresher from '../components/refresher/index.js'
-  export default class Store extends wepy.page {
+  import $wuxRefresher from '../../components/refresher/index.js'
+  export default class mineBookStore extends wepy.page {
     config = {}
     components = {}
     data = {}
     computed = {}
-    methods = {}
+    methods = {
+      tapGoStore() {
+        wx.switchTab({
+          url: '/pages/BookStore/index'
+        })
+      }
+    }
     events = {}
     onLoad() {
       this.refresher = new $wuxRefresher({
@@ -49,7 +60,6 @@
           console.log('onRefresh')
         }
       })
-      console.log(this.refresher)
     }
     touchstart(e) {
       this.refresher.touchstart(e)

@@ -11,7 +11,7 @@
 
 <script>
   import wepy from 'wepy'
-  import CountUp from '../components/countup/index.js' // countup组件
+  import CountUp from '../../components/countup/index.js' // countup组件
   export default class Mine extends wepy.page {
     config = {}
     components = {}

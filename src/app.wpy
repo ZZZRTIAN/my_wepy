@@ -13,10 +13,10 @@
   export default class extends wepy.app {
     config = {
       pages: [
-        'pages/store',
-        'pages/ownBook',
-        'pages/mine',
-        'pages/bookPage'
+        'pages/BookStore/index',
+        'pages/MineBook/index',
+        'pages/Mine/index',
+        'pages/Book/index'
       ],
       window: {
         backgroundTextStyle: 'light',
@@ -31,17 +31,17 @@
         backgroundColor: '#C7D69B',
         borderStyle: 'white',
         list: [{
-          pagePath: 'pages/store',
+          pagePath: 'pages/BookStore/index',
           iconPath: 'image/mall_unclick.png',
           selectedIconPath: 'image/mall_click.png',
           text: '书城'
         }, {
-          pagePath: 'pages/ownBook',
+          pagePath: 'pages/MineBook/index',
           iconPath: 'image/resource_unclick.png',
           selectedIconPath: 'image/resource_click.png',
           text: '我的书架'
         }, {
-          pagePath: 'pages/mine',
+          pagePath: 'pages/Mine/index',
           iconPath: 'image/mine_unclicked.png',
           selectedIconPath: 'image/mine_clicked.png',
           text: '个人中心'
@@ -50,24 +50,35 @@
       }
     }
     globalData = {
+      apiUrl: 'http://speechx_exam.oo/',
       userInfo: null
     }
     constructor() {
       super()
       this.use('requestfix')
     }
-    onLaunch() {}
-    getUserInfo(cb) {
-      const that = this
-      if (this.globalData.userInfo) {
-        return this.globalData.userInfo
-      }
-      wepy.getUserInfo({
-        success(res) {
-          that.globalData.userInfo = res.userInfo
-          cb && cb(res.userInfo)
+    onLaunch() {
+      wx.login({
+        success: function(res) {
+          console.log(res.code)
+          if (res.code) {
+            // 发起网络请求, 用code换取用户的id等信息
+            wx.request({
+              url: 'http://speechx_exam.oo/',
+              data: {
+                code: res.code
+              }
+            })
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
         }
       })
+    }
+    // 获取用户与笔的情况
+    async userAsync() {
+      const data = await this.sleep(3)
+      console.log(data)
     }
   }
 </script>
