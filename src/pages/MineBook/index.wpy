@@ -20,7 +20,7 @@
       </view>
       <view class="bookShelf">
         <view class="bookShelf-item" wx:for="{{[1,2,3,4]}}">
-          <navigator url="/pages/book/index" class="book-cover">
+          <navigator url="/pages/Book/index?id={{ item }}" class="book-cover">
             <image src="https://speechx-common.oss-cn-shenzhen.aliyuncs.com/books/cover/101/lonelybeach.png" />
           </navigator>
           <view class="book-title">test</view>

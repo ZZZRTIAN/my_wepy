@@ -13,7 +13,7 @@
           <view></view>
         </view>
       </view>
-      <button bindtap="setPlain">点击设置以上按钮plain属性</button>
+      <button @tap="test">点击</button>
     </view>
     <view class="book__bd">
       <view class="book__info"></view>
@@ -27,10 +27,18 @@
   export default class Book extends wepy.page {
     config = {}
     components = {}
-    data = {}
+    data = {
+      bookId: null
+    }
     computed = {}
-    methods = {}
+    methods = {
+      test() {
+        console.log(this.bookId)
+      }
+    }
     events = {}
-    onLoad() {}
+    onLoad(options) {
+      this.bookId = options.id
+    }
   }
 </script>
