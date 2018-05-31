@@ -7,18 +7,65 @@
     Mine
     <view class="countup">{{ c1 }}</view>
   </view>
+  <sliderLeft class="swider-item" wx:for="{{todoList}}" wx:for-item="todoItem" wx:key="todoItem.id" open="{{todoItem.isOpen}}" data-id="{{todoItem.id}}" bind:sliderLeftStart="handleSliderLeftStart" bind:change="handleChange" bind:delete="handleDelete">
+    <view class='slider-handle'>{{todoItem.text}}</view>
+  </sliderLeft>
 </template>
 
 <script>
   import wepy from 'wepy'
   import CountUp from '../../components/countup/index.js' // countup组件
+  import sliderLeft from '../../components/sliderLeft'
   export default class Mine extends wepy.page {
     config = {}
-    components = {}
-    data = {}
+    components = {
+      sliderLeft
+    }
+    data = {
+      list: [{
+        id: '',
+        name: '', // image src="images/icon_nav_{{item.id}}.png"
+        page: ''
+      }],
+      todoList: [
+        {
+          id: 'a1',
+          text: '你好1'
+        },
+        {
+          id: 'a2',
+          text: '你好2'
+        },
+        {
+          id: 'a3',
+          text: '你好3'
+        },
+        {
+          id: 'a4',
+          text: '你好4'
+        },
+        {
+          id: 'a5',
+          text: '你好5'
+        }, {
+          id: 'a6',
+          text: '你好6'
+        }
+      ]
+    }
     computed = {}
     methods = {}
     events = {}
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady() {
+      // 默认每个选项都是关闭状态
+      this.todoList.forEach(todoItem => {
+        todoItem.isOpen = false
+      })
+      this.$apply()
+    }
     onLoad() {
       this.c1 = new CountUp(1, 1024, 0, 2, {
         printValue(value) {
@@ -29,6 +76,23 @@
       })
       this.c1.start()
     }
-    onPullDownRefresh() {}
+    handleChange(isOpen) {
+      console.log('显示/关闭了菜单:', isOpen)
+    }
+    handleDelete() {
+      console.log('点击删除了')
+    }
+    handleSliderLeftStart(e) {
+      console.log('开始左滑', e.target.dataset.id)
+      this.todoList.forEach(todoItem => {
+        // 除了当前项，其它打开项的菜单都关闭，确保每次只有一个项可以左滑显示删除
+        if (todoItem.id !== e.target.dataset.id && todoItem.isOpen) {
+          todoItem.isOpen = false
+        }
+      })
+      this.setData({
+        todoList: this.todoList
+      })
+    }
   }
 </script>

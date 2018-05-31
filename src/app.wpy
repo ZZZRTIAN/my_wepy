@@ -1,9 +1,16 @@
 <style lang="less">
   page {
-    width: 100%;
-    height: 100%;
-    position: relative;
     background-color: #F6F3E2;
+    font-size: 16px;
+    font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+  }
+  .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
   }
 </style>
 
@@ -13,9 +20,9 @@
   export default class extends wepy.app {
     config = {
       pages: [
-        'pages/BookStore/index',
-        'pages/MineBook/index',
         'pages/Mine/index',
+        'pages/MineBook/index',
+        'pages/BookStore/index',
         'pages/Book/index'
       ],
       window: {
@@ -60,11 +67,11 @@
     onLaunch() {
       wx.login({
         success: function(res) {
-          console.log(res.code)
+          console.log(res)
           if (res.code) {
             // 发起网络请求, 用code换取用户的id等信息
             wx.request({
-              url: 'http://speechx_exam.oo/',
+              url: 'http://speechx_exam.oo/api/v1/test',
               data: {
                 code: res.code
               }

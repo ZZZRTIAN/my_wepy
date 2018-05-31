@@ -1,30 +1,19 @@
 <style lang="less">
-  @import '../../styles/refresher.less';
   @import '../../styles/book.less';
+  @import '../../styles/refresh.less';
 </style>
 
 <template>
   <view class="container">
-    <view class="refresher-view" style="position: absolute; width: 100%; height: 100%; {{ $wux.refresher.style }}" bindtouchstart="touchstart" bindtouchmove="touchmove" bindtouchend="touchend">
-      <view class="wux-refresher {{ $wux.refresher.className || 'hidden' }}">
-        <view class="wux-refresher__content {{ $wux.refresher.pullingText || $wux.refresher.refreshingText ? 'wux-refresher__content--text' : '' }}">
-          <view class="wux-refresher__icon-pulling {{ $wux.refresher.disablePullingRotation ? 'wux-refresher__icon-pulling--disabled' : '' }}">
-            <text class="{{ $wux.refresher.pullingIcon || 'wux-refresher__icon--arrow-down' }}"></text>
-          </view>
-          <view class="wux-refresher__text-pulling">{{ $wux.refresher.pullingText }}</view>
-          <view class="wux-refresher__icon-refreshing">
-            <text class="{{ $wux.refresher.refreshingIcon || 'wux-refresher__icon--refresher' }}"></text>
-          </view>
-          <view class="wux-refresher__text-refreshing">{{ $wux.refresher.refreshingText }}</view>
-        </view>
-      </view>
-      <view class="bookShelf">
-        <view class="bookShelf-item" wx:for="{{[1,2,3,4]}}">
-          <navigator url="/pages/Book/index?id={{ item }}" class="book-cover">
-            <image src="https://speechx-common.oss-cn-shenzhen.aliyuncs.com/books/cover/101/lonelybeach.png" />
-          </navigator>
-          <view class="book-title">test</view>
-        </view>
+    <view class="refresh {{ isRefreshing?'':'hide' }} ">
+      <image src="../../image/refreshing.gif" mode="widthFix"></image>
+    </view>
+    <view class="bookShelf">
+      <view class="bookShelf-item" wx:for="{{[1,2,3,4]}}">
+        <navigator url="/pages/Book/index?id={{ item }}" class="book-cover">
+          <image src="https://speechx-common.oss-cn-shenzhen.aliyuncs.com/books/cover/101/lonelybeach.png" />
+        </navigator>
+        <view class="book-title">test</view>
       </view>
     </view>
   </view>
@@ -32,33 +21,30 @@
 
 <script>
   import wepy from 'wepy'
-  import $wuxRefresher from '../../components/refresher/index.js'
   export default class BookStore extends wepy.page {
-    config = {}
+    config = {
+      enablePullDownRefresh: true
+    }
     components = {}
-    data = {}
+    data = {
+      isRefreshing: false
+    }
     computed = {}
     methods = {}
     events = {}
-    onLoad() {
-      this.refresher = new $wuxRefresher({
-        onPulling() {
-          console.log('onPulling')
-        },
-        onRefresh() {
-          console.log('onRefresh')
-        }
-      })
+    onLoad() {}
+    // 下拉刷新
+    onPullDownRefresh() {
+      wx.stopPullDownRefresh()
+      this.isRefreshing = true
+      setTimeout(() => {
+        this.isRefreshing = false
+        console.log('onPullDownRefresh')
+        console.log(this.isRefreshing)
+        this.$apply() // 在异步函数中更新数据的时候，必须手动调用$apply方法，才会触发脏数据检查流程的运行
+      }, 1000)
     }
-    touchstart(e) {
-      this.refresher.touchstart(e)
-    }
-    touchmove(e) {
-      this.refresher.touchmove(e)
-    }
-    touchend(e) {
-      this.refresher.touchend(e)
-    }
+    // 上拉加载
     onReachBottom() {
       console.log('onReachBottom')
     }

@@ -13,6 +13,7 @@
           <view></view>
         </view>
       </view>
+      <audio controls src="https://speechx-books.oss-cn-shenzhen.aliyuncs.com/pen_event_sentence_rel/190.mp3?Expires=1527586759&OSSAccessKeyId=TMP.AQE3alN3AWCLiGRaDjh9b33UEAJVwxvlg46iU6TRGDo4YKIjljtLJyS_KnB_ADAtAhUA3q-gKrAbNDmCIAhXYantgKu74cQCFAeD8oZWiLWyc4ZhkAS4UPbDb-Mm&Signature=%2BCmbgkpouQslm93AVgKCDpiy%2F64%3D"></audio>
       <button @tap="test">点击</button>
     </view>
     <view class="book__bd">
@@ -34,11 +35,17 @@
     methods = {
       test() {
         console.log(this.bookId)
+        //   wx.showToast({
+        //     title: '数据加载中',
+        //     icon: 'none',
+        //     duration: 3000
+        //   })
       }
     }
     events = {}
     onLoad(options) {
       this.bookId = options.id
+      // 初始化出本信息。 判断当前书本的状态
     }
   }
 </script>
